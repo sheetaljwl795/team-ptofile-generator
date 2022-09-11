@@ -7,7 +7,7 @@ const Intern = require("./lib/intern");
 const renderHTML = require("./lib/renderhtml");
 const { exit } = require('process');
 
-const memberPromts = [];
+const teamMembers = [];
 
 const enterManager = () => {
     inquirer.prompt ([
@@ -31,7 +31,12 @@ const enterManager = () => {
             name: "managerOfficeNumber",
             message: "Please enter manager's office number"
         }
-    ]);
+    ]).then(response => {
+        const manager = new Manager(response.managerName, response.managerId, response.managerEmail, response.managerOfficeNumber);
+        teamMembers.push(manager);
+        teamMenu();
+    }) 
+
 };
 
 const teamMenu = () => { 
@@ -41,8 +46,8 @@ const teamMenu = () => {
             name: "memberChoice",
             message: "Who are you adding to the team?",
             choice: ["Engineer", "Intern","Finish building my team"]
-        }]).then((data) => {
-            switch(data.memberChoice) {
+        }]).then((response) => {
+            switch(response.memberChoice) {
                 case 'Engineer':
                     return enterEngineer();
                 case 'Intern':
@@ -52,8 +57,7 @@ const teamMenu = () => {
                 default:
                     break;
             }
-            console.log(data);
-            
+            console.log(response);
         });
 };
 
@@ -79,8 +83,13 @@ const enterEngineer = () => {
             name: "engineerGirHub",
             message: "Please enter engineer's Github Username"
         }
-    ]);
+    ]).then(response => {
+        const engineer = new Engineer(response.engineerName, response.engineerId, response.engineerEmail, response.engineerGirHub);
+        teamMembers.push(engineer);
+        teamMenu();
+    });
 };
+
 const enterIntern = () => {
     inquirer.prompt ([
         {
@@ -103,11 +112,22 @@ const enterIntern = () => {
             name: "internSchool",
             message: "Please enter intern'sSchool name"
         }
-    ]);
+    ]).then(response => {
+        const intern = new Intern(response.internName, response.internId, response.internEmail, response.internSchool);
+        teamMembers.push(intern);
+        teamMenu();
+    });
 };
 
-exit()
+const exit = () => {
+    const memberProfile = renderHTML(teamMembers);
 
+    fs.writeFile('index.html', memberProfile, (error) => {
+        if (error) {
+            console.log(error)
+        }
+    });
+};
 
 
 
