@@ -33,7 +33,8 @@ WHEN I decide to finish building my team
 THEN I exit the application, and the HTML is generated
 
 ## Screen shot
- ![image](https://user-images.githubusercontent.com/107803903/189736635-8c6774fa-9c09-4cbc-bcdd-0efd002ff72f.png)
+![image](https://user-images.githubusercontent.com/107803903/189739996-e8db062b-7f27-4035-b199-c9bb493c514a.png)
+
  
  ## Walkthrough Video
  
