@@ -1,12 +1,9 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const Employee = require("./lib/employee");
 const Manager = require("./lib/manager");
 const Engineer = require("./lib/engineer");
 const Intern = require("./lib/intern");
 const renderHTML = require("./lib/renderhtml");
-const { exit } = require('process');
-
 const teamMembers = [];
 
 const enterManager = () => {
@@ -33,6 +30,7 @@ const enterManager = () => {
         }
     ]).then(response => {
         const manager = new Manager(response.managerName, response.managerId, response.managerEmail, response.managerOfficeNumber);
+        console.log(manager);
         teamMembers.push(manager);
         teamMenu();
     }) 
@@ -45,19 +43,22 @@ const teamMenu = () => {
             type: "list",
             name: "memberChoice",
             message: "Who are you adding to the team?",
-            choice: ["Engineer", "Intern","Finish building my team"]
+            choices: ["Engineer", "Intern","Finish building my team"]
         }]).then((response) => {
             switch(response.memberChoice) {
                 case 'Engineer':
-                    return enterEngineer();
+                    enterEngineer();
+                    break;
                 case 'Intern':
-                    return enterIntern();
+                    enterIntern();
+                    break;
                 case 'Finish building my team':
-                    return exit();
+                    exit();
+                    break;
                 default:
                     break;
             }
-            console.log(response);
+
         });
 };
 
@@ -80,12 +81,13 @@ const enterEngineer = () => {
         },
         {
             type: "input",
-            name: "engineerGirHub",
+            name: "engineerGitHub",
             message: "Please enter engineer's Github Username"
         }
     ]).then(response => {
-        const engineer = new Engineer(response.engineerName, response.engineerId, response.engineerEmail, response.engineerGirHub);
+        const engineer = new Engineer(response.engineerName, response.engineerId, response.engineerEmail, response.engineerGitHub);
         teamMembers.push(engineer);
+        console.log(engineer);
         teamMenu();
     });
 };
@@ -110,11 +112,12 @@ const enterIntern = () => {
         {
             type: "input",
             name: "internSchool",
-            message: "Please enter intern'sSchool name"
+            message: "Please enter intern's School name"
         }
     ]).then(response => {
         const intern = new Intern(response.internName, response.internId, response.internEmail, response.internSchool);
         teamMembers.push(intern);
+        console.log(intern);
         teamMenu();
     });
 };
@@ -128,6 +131,12 @@ const exit = () => {
         }
     });
 };
+
+
+enterManager();
+
+
+
 
 
 
