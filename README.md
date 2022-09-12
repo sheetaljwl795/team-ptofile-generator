@@ -37,4 +37,4 @@ THEN I exit the application, and the HTML is generated
  
  ## Walkthrough Video
  
-chrome-extension://mmeijimgabbpbgpdklnllpncmdofkcpn/app.html#/files/f592e54e-fa14-4afc-yc29-8ee03614995a
+https://drive.google.com/file/d/1Tg7AigJ5cncF4bUxdz9zmobsT_EJspF-/view
